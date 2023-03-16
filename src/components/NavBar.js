@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import userImage from "../assets/logo.png";
+import { useContext } from "react";
+import { UsuarioContext } from "../contexts/UsuarioLogado";
 
 export default function NavBar(){
+    const {usuario} = useContext(UsuarioContext);
+
     return(
         <ContainerNavBar>
             <p>TrackIt</p>
-            <img src={userImage}/>
+            <img src={usuario.image}/>
         </ContainerNavBar>
     );
 }
@@ -40,5 +43,6 @@ const ContainerNavBar = styled.div`
         height: 51px;
         border-radius: 98.5px;
         margin-right: 18px;
+        object-fit: cover;
     }
 `;

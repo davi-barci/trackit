@@ -7,12 +7,12 @@ export default function TelaHabitos(){
         <>
             <NavBar/>
             <ContainerPrincipal>
-                <ContainerHabitos>
+                <ContainerNovoHabito>
                     <div>
                         <p>Meus hábitos</p>
                         <button>+</button>
                     </div>
-                </ContainerHabitos>
+                </ContainerNovoHabito>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             </ContainerPrincipal>
             <Footer/>
@@ -42,7 +42,7 @@ const ContainerPrincipal = styled.div`
     }
 `;
 
-const ContainerHabitos = styled.div`
+const ContainerNovoHabito = styled.div`
     width: calc(100% - 35px);
     margin-top: 22px;
 
@@ -82,5 +82,4 @@ const ContainerHabitos = styled.div`
             cursor: pointer;
         }
     }
-
 `;
