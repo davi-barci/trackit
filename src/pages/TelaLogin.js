@@ -1,18 +1,58 @@
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function TelaLogin(){
+    const [formLogin, setFormLogin] = useState({email:"", password:""});
+    const [disabledFormLogin, setDisabledFormLogin] = useState(false);
+    const navigate = useNavigate();
+
+    function handleForm(e){
+        setFormLogin({...formLogin, [e.target.name]: e.target.value});
+    }
+
+    function realizarLogin(e){
+        e.preventDefault();
+
+        axios
+        .post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", formLogin)
+        .then(res => navigate("/hoje"))
+        .catch(err => {alert("Ocorreu um erro durante o seu login, tente novamente..."); setDisabledFormLogin(false)});
+
+        setDisabledFormLogin(true);
+    }
+
     return (
         <>
             <ImagemLogo>
                 <img src={logo}/>
             </ImagemLogo>
 
-            <ContainerInput>
-                <input placeholder="email" required/>
-                <input placeholder="senha" required/>
-                <button>Entrar</button>
+            <ContainerInput onSubmit={realizarLogin}>
+                <input 
+                    type="email" 
+                    placeholder="email" 
+                    name="email"
+                    value={formLogin.email}
+                    onChange={handleForm}
+                    disabled={disabledFormLogin}
+                    required
+                />
+                <input 
+                    type="password" 
+                    placeholder="senha" 
+                    name="password"
+                    value={formLogin.password}
+                    onChange={handleForm}
+                    disabled={disabledFormLogin}
+                    required
+                />
+                <button type="submit" disabled={disabledFormLogin}>
+                    {(!disabledFormLogin) ? "Entrar" : <ThreeDots color="#FFFFFF" width="51px" height="13px"/>}
+                </button>
             </ContainerInput>
 
             <LinkCadastro>

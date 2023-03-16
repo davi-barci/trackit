@@ -3,25 +3,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { ImagemLogo, ContainerInput, LinkCadastro } from "./TelaLogin";
 import { useState } from "react";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function TelaCadastro(){
-    const [form, setForm] = useState({email:"", password:"", name:"", image:""});
-    const [disabledForm, setDisabledForm] = useState(false);
+    const [formCadastro, setFormCadastro] = useState({email:"", password:"", name:"", image:""});
+    const [disabledFormCadastro, setDisabledFormCadastro] = useState(false);
     const navigate = useNavigate();
 
     function handleForm(e){
-        setForm({...form, [e.target.name]: e.target.value});
+        setFormCadastro({...formCadastro, [e.target.name]: e.target.value});
     }
 
     function finalizarCadastro(e){
         e.preventDefault();
         
         axios
-        .post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", form)
+        .post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", formCadastro)
         .then(res => navigate("/"))
-        .catch(err => {alert("Ocorreu um erro durante o seu cadastro, tente novamente..."); setDisabledForm(false)});
+        .catch(err => {alert("Ocorreu um erro durante o seu cadastro, tente novamente..."); setDisabledFormCadastro(false)});
 
-        setDisabledForm(true);
+        setDisabledFormCadastro(true);
     }
 
     return (
@@ -35,39 +36,41 @@ export default function TelaCadastro(){
                     type="email" 
                     placeholder="email" 
                     name="email"
-                    value={form.email}
+                    value={formCadastro.email}
                     onChange={handleForm}
-                    disabled={disabledForm}
+                    disabled={disabledFormCadastro}
                     required
                 />
                 <input 
                     type="password" 
                     placeholder="senha" 
                     name="password"
-                    value={form.password}
+                    value={formCadastro.password}
                     onChange={handleForm}
-                    disabled={disabledForm}
+                    disabled={disabledFormCadastro}
                     required
                 />
                 <input 
                     type="text" 
                     placeholder="nome" 
                     name="name"
-                    value={form.name}
+                    value={formCadastro.name}
                     onChange={handleForm}
-                    disabled={disabledForm}
+                    disabled={disabledFormCadastro}
                     required
                 />
                 <input 
                     type="url" 
                     placeholder="foto" 
                     name="image"
-                    value={form.image}
+                    value={formCadastro.image}
                     onChange={handleForm}
-                    disabled={disabledForm}
+                    disabled={disabledFormCadastro}
                     required
                 />
-                <button type="submit" disabled={disabledForm}>Cadastrar</button>
+                <button type="submit" disabled={disabledFormCadastro}>
+                    {(!disabledFormCadastro) ? "Cadastrar" : <ThreeDots color="#FFFFFF" width="51px" height="13px"/>}
+                </button>
             </ContainerInput>
 
             <LinkCadastro>
