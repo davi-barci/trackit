@@ -10,8 +10,8 @@ export default function TelaLogin(){
             </ImagemLogo>
 
             <ContainerInput>
-                <input placeholder="email"/>
-                <input placeholder="senha"/>
+                <input placeholder="email" required/>
+                <input placeholder="senha" required/>
                 <button>Entrar</button>
             </ContainerInput>
 
@@ -40,7 +40,7 @@ export const ImagemLogo = styled.div`
 
 `;
 
-export const ContainerInput = styled.div`
+export const ContainerInput = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
