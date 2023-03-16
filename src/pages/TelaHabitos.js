@@ -3,18 +3,31 @@ import Footer from "../components/Footer";
 import styled from "styled-components";
 import { diasSemana } from "../constants/dias";
 import { BsTrash } from "react-icons/bs";
-import { useState, useContext  } from "react";
+import { useState, useContext, useEffect  } from "react";
 import { UsuarioContext } from "../contexts/UsuarioLogado";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function TelaHabitos(){
-
     const {usuario} = useContext(UsuarioContext);
     const [exibirFormulario, setExibirFormulario] = useState("none");
     const [disabledSaveForm, setDisabledSaveForm] = useState(false);
     const [nomeNovoHabito, setNomeNovoHabito] = useState("");
     const [diasNovoHabito, setDiasNovoHabito] = useState([]);
+    const [listaHabitos, setListaHabitos] = useState([]);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${usuario.token}`
+            }
+        }
+
+        axios
+        .get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+        .then(res => setListaHabitos(res.data))
+        .catch(err => alert("Ocorreu um erro durante o carregamento dos hábitos. Por favor, tente novamente..."));
+    }, [listaHabitos]);
 
     function selecionarDia(dia){
         if (diasNovoHabito.includes(dia)){
@@ -29,7 +42,7 @@ export default function TelaHabitos(){
 
         const config = {
             headers: {
-                "Authorization": usuario.token
+                Authorization: `Bearer ${usuario.token}`
             }
         }
 
@@ -54,10 +67,24 @@ export default function TelaHabitos(){
         setDisabledSaveForm(true);
     }
 
+    function excluirHabito(idHabito){
+        if (window.confirm("Você tem certeza que deseja excluir esse hábito?")){
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${usuario.token}`
+                }
+            }
+    
+            axios
+            .delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${idHabito}`, config)
+            .catch(err => alert("Ocorreu um erro durante a exclusão do hábito. Por favor, tente novamente..."));
+        }
+    }
+
     return (
         <>
             <NavBar/>
-            <ContainerPrincipal>
+            <ContainerPrincipal display={(listaHabitos.length === 0) ? "block" : "none"}>
 
                 <ContainerNovoHabito exibirFormulario={exibirFormulario}>
                     <div>
@@ -76,9 +103,9 @@ export default function TelaHabitos(){
                         <div>
                             {diasSemana.map((elem, index) => 
                             <DiasButton key={index} 
-                            cor={(diasNovoHabito.includes(index-1) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})} 
-                            onClick={() => selecionarDia(index-1)}
-                            disabled={disabledSaveForm}
+                                cor={(diasNovoHabito.includes(index-1) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})} 
+                                onClick={() => selecionarDia(index-1)}
+                                disabled={disabledSaveForm}
                             >
                                 {elem}
                             </DiasButton>)}
@@ -90,15 +117,23 @@ export default function TelaHabitos(){
                     </div>
                 </ContainerNovoHabito>
 
-                <ContainerHabitos>
-                    <div>
-                        <p>Ler 1 capítulo de livro</p>
-                        <div>
-                            {diasSemana.map((elem, index) => 
-                            <div key={index}>{elem}</div>)}
+                <ContainerHabitos display={(listaHabitos.length === 0) ? "none" : "flex"}>
+                    {listaHabitos.map(habito =>
+                        <div key={habito.id}>
+                            <p>{habito.name}</p>
+                            <div>
+                                {diasSemana.map((elem, index) => 
+                                <DiasButton 
+                                    disabled 
+                                    key={index}
+                                    cor = {(habito.days.includes(index-1)) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"}} 
+                                >
+                                    {elem}
+                                </DiasButton>)}
+                            </div>
+                            <BsTrash onClick={() => excluirHabito(habito.id)}/>
                         </div>
-                        <BsTrash/>
-                    </div>
+                    )}
                 </ContainerHabitos>
                 
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
@@ -119,6 +154,7 @@ const ContainerPrincipal = styled.div`
     flex-direction: column;
 
     >p{
+        display: ${props => props.display};
         width: calc(100% - 35px);
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -288,6 +324,8 @@ const DiasButton = styled.button`
 
 const ContainerHabitos = styled.div`
     width: calc(100% - 35px);
+    display: ${props => props.display};
+    flex-direction: column;
     margin-top: 20px;
 
     >div{
@@ -317,25 +355,6 @@ const ContainerHabitos = styled.div`
             margin-top: 8px;
             padding-bottom: 15px;
             margin-left: 15px;
-
-            >div{
-                width: 30px;
-                height: 30px;
-                box-sizing: border-box;
-                background-color: #FFFFFF;
-                margin-right: 4px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid #D5D5D5;
-                border-radius: 5px;
-                font-family: 'Lexend Deca';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 19.976px;
-                line-height: 25px;
-                color: #DBDBDB;
-            }
         }
 
         svg{
