@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TelaLogin from "./pages/TelaLogin";
+import TelaCadastro from "./pages/TelaCadastro";
+import TelaHabitos from "./pages/TelaHabitos";
+import TelaHoje from "./pages/TelaHoje";
+import TelaHistorico from "./pages/TelaHistorico";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+			<Routes>
+				<Route path="/" element={<TelaLogin />} />
+        <Route path="/cadastro" element={<TelaCadastro />} />
+        <Route path="/habitos" element={<TelaHabitos />} />
+        <Route path="/hoje" element={<TelaHoje />} />
+        <Route path="/historico" element={<TelaHistorico />} />
+			</Routes>
+		</BrowserRouter>
   );
 }
 
-export default App;
+
