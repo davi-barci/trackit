@@ -16,8 +16,12 @@ export default function TelaHistorico(){
 }
 
 const ContainerPrincipal = styled.div`
-    width: 100%;
-    height: 100vh;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    overflow-y: scroll;
     background-color: #E5E5E5;
     margin: 70px 0px;
     display: flex;

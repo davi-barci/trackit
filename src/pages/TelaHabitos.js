@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { diasSemana } from "../constants/dias";
 import { BsTrash } from "react-icons/bs";
 import { useState, useContext, useEffect  } from "react";
-import { UsuarioContext } from "../contexts/UsuarioLogado";
+import UsuarioLogadoContext from "../contexts/UsuarioLogado";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function TelaHabitos(){
-    const {usuario} = useContext(UsuarioContext);
+    const {usuario} = useContext(UsuarioLogadoContext);
     const [exibirFormulario, setExibirFormulario] = useState("none");
     const [disabledSaveForm, setDisabledSaveForm] = useState(false);
     const [nomeNovoHabito, setNomeNovoHabito] = useState("");
@@ -103,8 +103,8 @@ export default function TelaHabitos(){
                         <div>
                             {diasSemana.map((elem, index) => 
                             <DiasButton key={index} 
-                                cor={(diasNovoHabito.includes(index-1) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})} 
-                                onClick={() => selecionarDia(index-1)}
+                                cor={(diasNovoHabito.includes(index) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})} 
+                                onClick={() => selecionarDia(index)}
                                 disabled={disabledSaveForm}
                             >
                                 {elem}
@@ -126,7 +126,7 @@ export default function TelaHabitos(){
                                 <DiasButton 
                                     disabled 
                                     key={index}
-                                    cor = {(habito.days.includes(index-1)) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"}} 
+                                    cor = {(habito.days.includes(index)) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"}} 
                                 >
                                     {elem}
                                 </DiasButton>)}
@@ -144,10 +144,14 @@ export default function TelaHabitos(){
 }
 
 const ContainerPrincipal = styled.div`
-    width: 100%;
-    height: 100vh;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    overflow-y: scroll;
     background-color: #E5E5E5;
-    margin: 70px 0px;
+    margin-top: 70px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -327,6 +331,7 @@ const ContainerHabitos = styled.div`
     display: ${props => props.display};
     flex-direction: column;
     margin-top: 20px;
+    margin-bottom: 100px;
 
     >div{
         width: 100%;

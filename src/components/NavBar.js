@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useContext } from "react";
-import { UsuarioContext } from "../contexts/UsuarioLogado";
+import UsuarioLogadoContext from "../contexts/UsuarioLogado";
 
 export default function NavBar(){
-    const {usuario} = useContext(UsuarioContext);
+    const {usuario} = useContext(UsuarioLogadoContext);
 
     return(
         <ContainerNavBar>

@@ -1,14 +1,5 @@
-import React, {createContext, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext } from 'react';
 
-export const UsuarioContext = createContext({});
+const UsuarioLogadoContext = createContext();
 
-export default function UsuarioProvider({children}){
-    const [usuario, setUsuario] = useState({});
-
-    return(
-        <UsuarioContext.Provider value={{usuario, setUsuario}}>
-            {children}
-        </UsuarioContext.Provider>
-    );
-}
+export default UsuarioLogadoContext;

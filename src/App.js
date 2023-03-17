@@ -4,12 +4,17 @@ import TelaCadastro from "./pages/TelaCadastro";
 import TelaHabitos from "./pages/TelaHabitos";
 import TelaHoje from "./pages/TelaHoje";
 import TelaHistorico from "./pages/TelaHistorico";
-import UsuarioProvider from "./contexts/UsuarioLogado";
+import UsuarioLogadoContext from "./contexts/UsuarioLogado";
+import { useState } from "react";
+
 
 export default function App() {
+  const [usuario, setUsuario] = useState({});
+  const [habitosCompletados, setHabitosCompletados] = useState(0);
+
   return (
     <BrowserRouter>
-      <UsuarioProvider>
+      <UsuarioLogadoContext.Provider value={{usuario, setUsuario, habitosCompletados, setHabitosCompletados}}>
         <Routes>
           <Route path="/" element={<TelaLogin />} />
           <Route path="/cadastro" element={<TelaCadastro />} />
@@ -17,9 +22,11 @@ export default function App() {
           <Route path="/hoje" element={<TelaHoje />} />
           <Route path="/historico" element={<TelaHistorico />} />
         </Routes>
-      </UsuarioProvider>
+      </UsuarioLogadoContext.Provider>
 		</BrowserRouter>
   );
 }
+
+
 
 

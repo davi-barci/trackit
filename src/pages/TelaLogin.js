@@ -4,12 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import { UsuarioContext } from "../contexts/UsuarioLogado";
+import UsuarioLogadoContext from "../contexts/UsuarioLogado";
 
 export default function TelaLogin(){
     const [formLogin, setFormLogin] = useState({email:"", password:""});
     const [disabledFormLogin, setDisabledFormLogin] = useState(false);
-    const {setUsuario} = useContext(UsuarioContext);
+    const {setUsuario} = useContext(UsuarioLogadoContext);
     const navigate = useNavigate();
 
     function handleForm(e){
