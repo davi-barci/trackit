@@ -39,6 +39,7 @@ export default function TelaCadastro(){
                     value={formCadastro.email}
                     onChange={handleForm}
                     disabled={disabledFormCadastro}
+                    data-test="email-input" 
                     required
                 />
                 <input 
@@ -48,6 +49,7 @@ export default function TelaCadastro(){
                     value={formCadastro.password}
                     onChange={handleForm}
                     disabled={disabledFormCadastro}
+                    data-test="password-input"
                     required
                 />
                 <input 
@@ -57,6 +59,7 @@ export default function TelaCadastro(){
                     value={formCadastro.name}
                     onChange={handleForm}
                     disabled={disabledFormCadastro}
+                    data-test="user-name-input"
                     required
                 />
                 <input 
@@ -66,15 +69,16 @@ export default function TelaCadastro(){
                     value={formCadastro.image}
                     onChange={handleForm}
                     disabled={disabledFormCadastro}
+                    data-test="user-image-input"
                     required
                 />
-                <button type="submit" disabled={disabledFormCadastro}>
+                <button type="submit" data-test="signup-btn" disabled={disabledFormCadastro}>
                     {(!disabledFormCadastro) ? "Cadastrar" : <ThreeDots color="#FFFFFF" width="51px" height="13px"/>}
                 </button>
             </ContainerInput>
 
             <LinkCadastro>
-                <Link to={"/"}>
+                <Link to={"/"} data-test="login-link" >
                     Já tem uma conta? Faça login!
                 </Link>
             </LinkCadastro>

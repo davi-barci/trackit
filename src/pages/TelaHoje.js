@@ -53,21 +53,21 @@ export default function TelaHoje(){
         <>
             <NavBar/>
             <ContainerPrincipal>
-                <p>{diaAtual[0].toUpperCase() + diaAtual.slice(1)}</p>
+                <p  data-test="today">{diaAtual[0].toUpperCase() + diaAtual.slice(1)}</p>
                 {
-                    (qtdHabitosFeitos === 0) ? <p>Nenhum hábito concluído ainda</p> : <p style={{color: '#8FC549'}}>{Math.round((qtdHabitosFeitos/listaHabitosHoje.length)*100)}% dos hábitos concluídos</p>
+                    (qtdHabitosFeitos === 0) ? <p data-test="today-counter">Nenhum hábito concluído ainda</p> : <p data-test="today-counter" style={{color: '#8FC549'}}>{Math.round((qtdHabitosFeitos/listaHabitosHoje.length)*100)}% dos hábitos concluídos</p>
                 }
                 
                 <ContainerHabitosHoje>
                     {listaHabitosHoje.map(elem =>
-                        <div key={elem.id}>
+                        <div data-test="today-habit-container" key={elem.id}>
                             <div>
-                                <p>{elem.name}</p>
-                                <CurrentSequenceText cor={(elem.done) ? "#8FC549" : "#666666"}><span style={{color: '#666666'}}>Sequência atual:</span> {elem.currentSequence} {(elem.currentSequence === 1) ? "dia" : "dias"} </CurrentSequenceText>
-                                <HighestSequenceText cor={(elem.currentSequence === elem.highestSequence && elem.done) ? "#8FC549" : "#666666"}><span style={{color: '#666666'}}>Seu recorde:</span> {elem.highestSequence} {(elem.highestSequence === 1) ? "dia" : "dias"}</HighestSequenceText>
+                                <p data-test="today-habit-name">{elem.name}</p>
+                                <CurrentSequenceText data-test="today-habit-sequence" cor={(elem.done) ? "#8FC549" : "#666666"}><span style={{color: '#666666'}}>Sequência atual:</span> {elem.currentSequence} {(elem.currentSequence === 1) ? "dia" : "dias"} </CurrentSequenceText>
+                                <HighestSequenceText data-test="today-habit-record" cor={(elem.currentSequence === elem.highestSequence && elem.done) ? "#8FC549" : "#666666"}><span style={{color: '#666666'}}>Seu recorde:</span> {elem.highestSequence} {(elem.highestSequence === 1) ? "dia" : "dias"}</HighestSequenceText>
                             </div>
                             <CheckButton bg={(elem.done) ? "#8FC549" : "#EBEBEB"}>
-                                <BsCheckLg onClick={() => toggleCheck(elem.id, elem.done)}/>
+                                <BsCheckLg data-test="today-habit-check-btn" onClick={() => toggleCheck(elem.id, elem.done)}/>
                             </CheckButton>
                         </div>
                     )}

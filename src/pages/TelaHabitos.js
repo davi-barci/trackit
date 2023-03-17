@@ -89,49 +89,53 @@ export default function TelaHabitos(){
                 <ContainerNovoHabito exibirFormulario={exibirFormulario}>
                     <div>
                         <p>Meus hábitos</p>
-                        <button onClick={() => setExibirFormulario("flex")}>+</button>
+                        <button data-test="habit-create-btn" onClick={() => setExibirFormulario("flex")}>+</button>
                     </div>
 
-                    <div>
+                    <div data-test="habit-create-container">
                         <input 
                             placeholder="nome do hábito"
                             type="text"
                             value={nomeNovoHabito}
                             onChange={e => setNomeNovoHabito(e.target.value)}
+                            data-test="habit-name-input" 
                             disabled={disabledSaveForm}
                         />
                         <div>
                             {diasSemana.map((elem, index) => 
-                            <DiasButton key={index} 
+                            <DiasButton 
+                                key={index} 
                                 cor={(diasNovoHabito.includes(index) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})} 
                                 onClick={() => selecionarDia(index)}
+                                data-test="habit-day" 
                                 disabled={disabledSaveForm}
                             >
                                 {elem}
                             </DiasButton>)}
                         </div>
                         <div>
-                            <button disabled={disabledSaveForm} onClick={() => setExibirFormulario("none")}>Cancelar</button>
-                            <button disabled={disabledSaveForm} onClick={salvarNovoHabito}>{(!disabledSaveForm) ? "Salvar" : <ThreeDots color="#FFFFFF" width="43px" height="11px"/>}</button>
+                            <button data-test="habit-create-cancel-btn" disabled={disabledSaveForm} onClick={() => setExibirFormulario("none")}>Cancelar</button>
+                            <button data-test="habit-create-save-btn" disabled={disabledSaveForm} onClick={salvarNovoHabito}>{(!disabledSaveForm) ? "Salvar" : <ThreeDots color="#FFFFFF" width="43px" height="11px"/>}</button>
                         </div>
                     </div>
                 </ContainerNovoHabito>
 
                 <ContainerHabitos display={(listaHabitos.length === 0) ? "none" : "flex"}>
                     {listaHabitos.map(habito =>
-                        <div key={habito.id}>
-                            <p>{habito.name}</p>
+                        <div key={habito.id} data-test="habit-container">
+                            <p  data-test="habit-name">{habito.name}</p>
                             <div>
                                 {diasSemana.map((elem, index) => 
                                 <DiasButton 
                                     disabled 
                                     key={index}
+                                    data-test="habit-day" 
                                     cor = {(habito.days.includes(index)) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"}} 
                                 >
                                     {elem}
                                 </DiasButton>)}
                             </div>
-                            <BsTrash onClick={() => excluirHabito(habito.id)}/>
+                            <BsTrash  data-test="habit-delete-btn" onClick={() => excluirHabito(habito.id)}/>
                         </div>
                     )}
                 </ContainerHabitos>

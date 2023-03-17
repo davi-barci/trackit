@@ -6,7 +6,7 @@ export default function NavBar(){
     const {usuario} = useContext(UsuarioLogadoContext);
 
     return(
-        <ContainerNavBar>
+        <ContainerNavBar data-test="header">
             <p>TrackIt</p>
             <img src={usuario.image}/>
         </ContainerNavBar>

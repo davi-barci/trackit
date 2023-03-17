@@ -41,6 +41,7 @@ export default function TelaLogin(){
                     value={formLogin.email}
                     onChange={handleForm}
                     disabled={disabledFormLogin}
+                    data-test="email-input"
                     required
                 />
                 <input 
@@ -50,15 +51,16 @@ export default function TelaLogin(){
                     value={formLogin.password}
                     onChange={handleForm}
                     disabled={disabledFormLogin}
+                    data-test="password-input"
                     required
                 />
-                <button type="submit" disabled={disabledFormLogin}>
+                <button type="submit"  data-test="login-btn" disabled={disabledFormLogin}>
                     {(!disabledFormLogin) ? "Entrar" : <ThreeDots color="#FFFFFF" width="51px" height="13px"/>}
                 </button>
             </ContainerInput>
 
             <LinkCadastro>
-                <Link to={"/cadastro"}>
+                <Link to={"/cadastro"} data-test="signup-link">
                     Não tem uma conta? Cadastre-se!
                 </Link>
             </LinkCadastro>

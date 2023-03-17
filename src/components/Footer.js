@@ -9,11 +9,10 @@ export default function Footer(){
     const { habitosCompletados } = useContext(UsuarioLogadoContext);
 
     return(
-        <ContainerFooter>
-            <Link to={"/habitos"}>Hábitos</Link>
-            <Link to={"/hoje"}>
+        <ContainerFooter data-test="menu">
+            <Link to={"/habitos"}  data-test="habit-link">Hábitos</Link>
+            <Link to={"/hoje"} data-test="today-link">
                 <CircularProgressbar
-                        className="progressbar"
                         value={habitosCompletados}
                         text={'Hoje'}
                         background={true}
@@ -38,7 +37,7 @@ export default function Footer(){
                         }}
                     />
                 </Link>
-            <Link to={"/historico"}>Histórico</Link>
+            <Link to={"/historico"} data-test="history-link">Histórico</Link>
         </ContainerFooter>
     );
 }
