@@ -25,7 +25,7 @@ export default function TelaHoje(){
 
         axios
         .get(`${BASE_URL}/habits/today`, config)
-        .then(res => {setListaHabitosHoje(res.data); setQtdHabitosFeitos(res.data.filter(elem => elem.done === true).length); setHabitosCompletados(Math.round((qtdHabitosFeitos/listaHabitosHoje.length)*100))})
+        .then(res => {setListaHabitosHoje(res.data); setQtdHabitosFeitos(res.data.filter(elem => elem.done === true).length); setHabitosCompletados((res.data.length === 0) ? 0 : Math.round((qtdHabitosFeitos/listaHabitosHoje.length)*100))})
         .catch(err => alert("Ocorreu um erro durante o carregamento dos hábitos de hoje. Por favor, tente novamente..."));
     }, [listaHabitosHoje]);
 

@@ -1,3 +1,5 @@
+import { Calendar } from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
 import styled from "styled-components";
 
 export const ContainerPrincipal = styled.div`
@@ -24,16 +26,33 @@ export const ContainerPrincipal = styled.div`
             color: #126BA5;
             margin-top: 28px;
         }
-
-        >p:nth-of-type(2){
-            width: calc(100% - 35px);
-            font-family: 'Lexend Deca';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 22px;
-            color: #666666;
-            margin-top: 18px;
-        }
 `;
+
+export const CalendarStyle = styled(Calendar)`
+    width: calc(100% - 40px);
+    height: 402px;
+    margin-top: 11px;
+    border: none;
+    border-radius: 10px;
+
+    .react-calendar__month-view__days{
+      button{
+        margin-top: 12px;
+        padding-bottom: 12px;
+        clip-path: circle();
+      }
+    }
+
+    .completo{
+        background-color: #8cc654;
+    }
+    .incompleto{
+        background-color: #ea5766;
+    }
+
+    .ativo{
+        background-color: #1087ff;
+    }
+`
+
 
