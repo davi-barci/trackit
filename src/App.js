@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import TelaLogin from "./pages/TelaLogin";
 import TelaCadastro from "./pages/TelaCadastro";
 import TelaHabitos from "./pages/TelaHabitos";
@@ -9,7 +9,7 @@ import { useState } from "react";
 
 
 export default function App() {
-  const [usuario, setUsuario] = useState({});
+  const [usuario, setUsuario] = useState((localStorage.getItem("usuario")) ? (JSON.parse(localStorage.getItem("usuario"))) : null);
   const [habitosCompletados, setHabitosCompletados] = useState(0);
 
   return (

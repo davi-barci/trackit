@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import UsuarioLogadoContext from "../contexts/UsuarioLogado";
@@ -9,8 +9,15 @@ import UsuarioLogadoContext from "../contexts/UsuarioLogado";
 export default function TelaLogin(){
     const [formLogin, setFormLogin] = useState({email:"", password:""});
     const [disabledFormLogin, setDisabledFormLogin] = useState(false);
-    const {setUsuario} = useContext(UsuarioLogadoContext);
+    const {usuario, setUsuario} = useContext(UsuarioLogadoContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(usuario !== null){
+            navigate("/hoje");
+        }
+
+    }, []);
 
     function handleForm(e){
         setFormLogin({...formLogin, [e.target.name]: e.target.value});
@@ -21,7 +28,16 @@ export default function TelaLogin(){
 
         axios
         .post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", formLogin)
-        .then(res => {navigate("/hoje"); setUsuario(res.data);})
+        .then(res => {
+            localStorage.setItem("usuario", JSON.stringify({
+                name: res.data.name, 
+                email: res.data.email,
+                image: res.data.image, 
+                token: res.data.token 
+            })); 
+            setUsuario(res.data);
+            navigate("/hoje");
+        })
         .catch(err => {alert("Ocorreu um erro durante o seu login, tente novamente..."); setDisabledFormLogin(false)});
 
         setDisabledFormLogin(true);

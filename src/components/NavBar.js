@@ -1,14 +1,24 @@
 import styled from "styled-components";
 import { useContext } from "react";
 import UsuarioLogadoContext from "../contexts/UsuarioLogado";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar(){
-    const {usuario} = useContext(UsuarioLogadoContext);
+    const {usuario, setUsuario} = useContext(UsuarioLogadoContext);
+    const navigate = useNavigate();
+
+    function logoutApp(){
+        if (window.confirm("Você realmente deseja sair dessa conta?")){
+            localStorage.removeItem("usuario");
+            setUsuario(null);
+            navigate("/");
+        }
+    }
 
     return(
         <ContainerNavBar data-test="header">
             <p>TrackIt</p>
-            <img src={usuario.image}/>
+            <img src={usuario.image} onClick={logoutApp}/>
         </ContainerNavBar>
     );
 }
