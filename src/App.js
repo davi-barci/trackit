@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import TelaLogin from "./pages/TelaLogin";
-import TelaCadastro from "./pages/TelaCadastro";
-import TelaHabitos from "./pages/TelaHabitos";
-import TelaHoje from "./pages/TelaHoje";
-import TelaHistorico from "./pages/TelaHistorico";
+import TelaLogin from "./pages/TelaLogin/TelaLogin";
+import TelaCadastro from "./pages/TelaCadastro/TelaCadastro";
+import TelaHabitos from "./pages/TelaHabitos/TelaHabitos";
+import TelaHoje from "./pages/TelaHoje/TelaHoje";
+import TelaHistorico from "./pages/TelaHistorico/TelaHistorico";
 import UsuarioLogadoContext from "./contexts/UsuarioLogado";
 import { useState } from "react";
 

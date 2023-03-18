@@ -1,9 +1,10 @@
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { ImagemLogo, ContainerInput, LinkCadastro } from "./TelaLogin";
+import { ImagemLogo, ContainerInput, LinkCadastro } from "../TelaLogin/styles";
 import { useState } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import { BASE_URL } from "../../constants/urls";
 
 export default function TelaCadastro(){
     const [formCadastro, setFormCadastro] = useState({email:"", password:"", name:"", image:""});
@@ -18,7 +19,7 @@ export default function TelaCadastro(){
         e.preventDefault();
         
         axios
-        .post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", formCadastro)
+        .post(`${BASE_URL}/auth/sign-up`, formCadastro)
         .then(res => navigate("/"))
         .catch(err => {alert("Ocorreu um erro durante o seu cadastro, tente novamente..."); setDisabledFormCadastro(false)});
 
