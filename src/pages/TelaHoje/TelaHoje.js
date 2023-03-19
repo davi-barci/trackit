@@ -25,7 +25,7 @@ export default function TelaHoje(){
 
         axios
         .get(`${BASE_URL}/habits/today`, config)
-        .then(res => {setListaHabitosHoje(res.data); setQtdHabitosFeitos(res.data.filter(elem => elem.done === true).length); setHabitosCompletados((res.data.length === 0) ? 0 : Math.round((qtdHabitosFeitos/listaHabitosHoje.length)*100))})
+        .then(res => {setListaHabitosHoje(res.data); setQtdHabitosFeitos(res.data.filter(elem => elem.done === true).length); setHabitosCompletados((res.data.length === 0 || qtdHabitosFeitos === 0) ? 0 : Math.round((qtdHabitosFeitos/listaHabitosHoje.length)*100))})
         .catch(err => alert("Ocorreu um erro durante o carregamento dos hábitos de hoje. Por favor, tente novamente..."));
     }, [listaHabitosHoje]);
 
@@ -39,12 +39,10 @@ export default function TelaHoje(){
         if (done){
             axios
             .post(`${BASE_URL}/habits/${id}/uncheck`,"",config)
-            .then(res => console.log("habito desmarcado"))
             .catch(err => alert("Ocorreu um erro durante a operação de desmarcar o hábito. Por favor, tente novamente..."));
         }else{
             axios
             .post(`${BASE_URL}/habits/${id}/check`,"",config)
-            .then(res => console.log("habito marcado"))
             .catch(err => alert("Ocorreu um erro durante a operação de marcar o hábito. Por favor, tente novamente..."));
         }
     }
