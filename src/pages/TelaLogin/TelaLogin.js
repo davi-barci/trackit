@@ -31,15 +31,19 @@ export default function TelaLogin(){
         .post(`${BASE_URL}/auth/login`, formLogin)
         .then(res => {
             localStorage.setItem("usuario", JSON.stringify({
-                name: res.data.name, 
+                name: res.data.name,
                 email: res.data.email,
-                image: res.data.image, 
-                token: res.data.token 
-            })); 
+                image: res.data.image,
+                token: res.data.token
+            }));
             setUsuario(res.data);
             navigate("/hoje");
         })
-        .catch(err => {alert("Ocorreu um erro durante o seu login, tente novamente..."); setDisabledFormLogin(false)});
+        .catch(err => {
+            console.log(err);
+            alert("Ocorreu um erro durante o seu login, tente novamente..."); 
+            setDisabledFormLogin(false);
+        });
 
         setDisabledFormLogin(true);
     }
@@ -51,9 +55,9 @@ export default function TelaLogin(){
             </ImagemLogo>
 
             <ContainerInput onSubmit={realizarLogin}>
-                <input 
-                    type="email" 
-                    placeholder="email" 
+                <input
+                    type="email"
+                    placeholder="email"
                     name="email"
                     value={formLogin.email}
                     onChange={handleForm}
@@ -61,9 +65,9 @@ export default function TelaLogin(){
                     data-test="email-input"
                     required
                 />
-                <input 
-                    type="password" 
-                    placeholder="senha" 
+                <input
+                    type="password"
+                    placeholder="senha"
                     name="password"
                     value={formLogin.password}
                     onChange={handleForm}

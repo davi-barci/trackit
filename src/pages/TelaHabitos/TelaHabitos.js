@@ -22,17 +22,20 @@ export default function TelaHabitos(){
             headers: {
                 Authorization: `Bearer ${usuario.token}`
             }
-        }
+        };
 
         axios
         .get(`${BASE_URL}/habits`, config)
         .then(res => setListaHabitos(res.data))
-        .catch(err => alert("Ocorreu um erro durante o carregamento dos hábitos. Por favor, tente novamente..."));
+        .catch(err => {
+            console.log(err);
+            alert("Ocorreu um erro durante o carregamento dos hábitos. Por favor, tente novamente...");
+        });
     }, [listaHabitos]);
 
     function selecionarDia(dia){
         if (diasNovoHabito.includes(dia)){
-            setDiasNovoHabito(diasNovoHabito.filter(elem => elem != dia));
+            setDiasNovoHabito(diasNovoHabito.filter(elem => elem !== dia));
         }else{
             setDiasNovoHabito([...diasNovoHabito, dia]);
         }
@@ -53,12 +56,12 @@ export default function TelaHabitos(){
             headers: {
                 Authorization: `Bearer ${usuario.token}`
             }
-        }
+        };
 
         const body = {
             name: nomeNovoHabito,
-            days: diasNovoHabito 
-        }
+            days: diasNovoHabito
+        };
 
         axios
         .post(`${BASE_URL}/habits`, body, config)
@@ -69,6 +72,7 @@ export default function TelaHabitos(){
             setDisabledSaveForm(false);
         })
         .catch(err => {
+            console.log(err);
             alert("Ocorreu um erro durante a criação do hábito, tente novamente...");
             setDisabledSaveForm(false);
         });
@@ -82,11 +86,14 @@ export default function TelaHabitos(){
                 headers: {
                     Authorization: `Bearer ${usuario.token}`
                 }
-            }
-    
+            };
+
             axios
             .delete(`${BASE_URL}/habits/${idHabito}`, config)
-            .catch(err => alert("Ocorreu um erro durante a exclusão do hábito. Por favor, tente novamente..."));
+            .catch(err => {
+                console.log(err);
+                alert("Ocorreu um erro durante a exclusão do hábito. Por favor, tente novamente...");
+            });
         }
     }
 
@@ -102,21 +109,21 @@ export default function TelaHabitos(){
                     </div>
 
                     <div data-test="habit-create-container">
-                        <input 
+                        <input
                             placeholder="nome do hábito"
                             type="text"
                             value={nomeNovoHabito}
                             onChange={e => setNomeNovoHabito(e.target.value)}
-                            data-test="habit-name-input" 
+                            data-test="habit-name-input"
                             disabled={disabledSaveForm}
                         />
                         <div>
-                            {diasSemana.map((elem, index) => 
-                            <DiasButton 
-                                key={index} 
-                                cor={(diasNovoHabito.includes(index) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})} 
+                            {diasSemana.map((elem, index) =>
+                            <DiasButton
+                                key={index}
+                                cor={(diasNovoHabito.includes(index) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"})}
                                 onClick={() => selecionarDia(index)}
-                                data-test="habit-day" 
+                                data-test="habit-day"
                                 disabled={disabledSaveForm}
                             >
                                 {elem}
@@ -124,7 +131,11 @@ export default function TelaHabitos(){
                         </div>
                         <div>
                             <button data-test="habit-create-cancel-btn" disabled={disabledSaveForm} onClick={() => setExibirFormulario("none")}>Cancelar</button>
-                            <button data-test="habit-create-save-btn" disabled={disabledSaveForm} onClick={salvarNovoHabito}>{(!disabledSaveForm) ? "Salvar" : <ThreeDots color="#FFFFFF" width="43px" height="11px"/>}</button>
+                            <button
+                                data-test="habit-create-save-btn"
+                                disabled={disabledSaveForm}
+                                onClick={salvarNovoHabito}>{(!disabledSaveForm) ? "Salvar" : <ThreeDots color="#FFFFFF" width="43px" height="11px"/>}
+                            </button>
                         </div>
                     </div>
                 </ContainerNovoHabito>
@@ -134,13 +145,13 @@ export default function TelaHabitos(){
                         <div key={habito.id} data-test="habit-container">
                             <p  data-test="habit-name">{habito.name}</p>
                             <div>
-                                {diasSemana.map((elem, index) => 
+                                {diasSemana.map((elem, index) =>
                                 <DiasButton 
-                                    disabled 
+                                    disabled
                                     key={index}
-                                    data-test="habit-day" 
-                                    cor = {(habito.days.includes(index)) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"}} 
-                                >
+                                    data-test="habit-day"
+                                    cor = {(habito.days.includes(index)) ? {bg: "#CFCFCF", cor: "#FFFFFF"} : {bg: "#FFFFFF", cor: "#DBDBDB"}}
+                                 >
                                     {elem}
                                 </DiasButton>)}
                             </div>
@@ -148,7 +159,6 @@ export default function TelaHabitos(){
                         </div>
                     )}
                 </ContainerHabitos>
-                
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             </ContainerPrincipal>
             <Footer/>

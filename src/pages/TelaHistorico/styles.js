@@ -34,7 +34,7 @@ export const CalendarContainer = styled.div`
     margin-top: 11px;
     display: flex;
     justify-content: center;
-`
+`;
 
 export const CalendarStyle = styled(Calendar)`
     width: calc(100% - 40px);

@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar";
 import { ContainerPrincipal, CalendarContainer, CalendarStyle, ContainerHabitos, ListaHabitos, StatusHabito} from "./styles";
 import { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import 'dayjs/locale/pt-br'; 
+import 'dayjs/locale/pt-br';
 import { BASE_URL } from "../../constants/urls";
 import UsuarioLogadoContext from "../../contexts/UsuarioLogado";
 import axios from "axios";
@@ -21,7 +21,7 @@ export default function TelaHistorico(){
             headers: {
                 Authorization: `Bearer ${usuario.token}`
             }
-        }
+        };
 
         axios
         .get(`${BASE_URL}/habits/history/daily`, config)
@@ -44,13 +44,16 @@ export default function TelaHistorico(){
             setDiasHabitosIncompletos(diasIncompletos);
             setHistoricoUsuario(res.data);
         })
-        .catch(err => alert("Ocorreu um erro durante a exibição do histórico. Por favor, tente novamente..."));
+        .catch(err => {
+            console.log(err);
+            alert("Ocorreu um erro durante a exibição do histórico. Por favor, tente novamente...");
+        });
       }, [historicoUsuario]);
 
 
     function onChange(nextDate) {
         const habitos = historicoUsuario.find(e => e.day === dayjs(nextDate).format("DD/MM/YYYY"));
-        if(habitos != undefined && dayjs(nextDate).format("DD/MM/YYYY") != dayjs().format("DD/MM/YYYY")){
+        if(habitos !== undefined && dayjs(nextDate).format("DD/MM/YYYY") !== dayjs().format("DD/MM/YYYY")){
             setListaHabitos(habitos.habits);
         }else{
             setListaHabitos([]);
@@ -81,9 +84,9 @@ export default function TelaHistorico(){
                 <p>Histórico</p>
                 <CalendarContainer data-test="calendar">
                     <CalendarStyle
-                        onChange={onChange} 
+                        onChange={onChange}
                         showFixedNumberOfWeeks={true}
-                        value={data} 
+                        value={data}
                         locale="pt-BR"
                         tileClassName={backgroundColor}
                         formatDay={(locale, date) => dayjs(date).format("DD")}
@@ -92,7 +95,7 @@ export default function TelaHistorico(){
                 <ContainerHabitos display={(listaHabitos.length === 0) ? "none" : "flex"}>
                     <p>Lista de Hábitos</p>
                     <ListaHabitos>
-                        {listaHabitos.map(elem => 
+                        {listaHabitos.map(elem =>
                             <div>
                                 <StatusHabito cor={(elem.done) ? "#8cc654" : "#ea5766"}/>
                                 <p>{elem.name}</p>
@@ -101,7 +104,7 @@ export default function TelaHistorico(){
                     </ListaHabitos>
                 </ContainerHabitos>
             </ContainerPrincipal>
-            <Footer/>     
+            <Footer/>
         </>
     );
 }
