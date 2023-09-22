@@ -16,6 +16,15 @@
 
 <p align="justify">Track It is a comprehensive habit-tracking application designed for your weekly routines. Within this project, you can create your account and efficiently manage your weekly activities. This application utilizes an API along with various libraries, including react-loader-spinner, react-circular-progressbar, dayjs, and react-calendar, to enhance the user experience.</p>
 
+## 📸 Mockup
+<div  align="center" >
+<img  src="https://github.com/davi-barci/trackit/assets/121765281/8ae8aea4-f4b6-46df-9259-bdeba108c76c" alt="mockup">
+</div>
+
+<div  align="center" >
+<img  src="https://github.com/davi-barci/trackit/assets/121765281/a792a5f8-722c-469d-81c9-2747cfb36497" alt="mockup">
+</div>
+
 ## 🚧 Status of work
 
 ![status](https://github.com/davi-barci/mywallet-front/assets/121765281/ad19d60f-6afe-4d8b-93a7-e3133637523d)
